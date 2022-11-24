@@ -13,7 +13,7 @@
                     <div class="d-flex justify-content-between px-md-1">
                         <div>
                             <h3 class="text-success"><?= $total_upload ?></h3>
-                            <p class="mb-0 text-success"><strong>DATA</strong></p>
+                            <p class="mb-0 text-success"><strong>DATA DOKUMEN</strong></p>
                         </div>
                         <div class="align-self-center">
                             <i class="fas fa-book-open text-success fa-3x"></i>
@@ -36,6 +36,13 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt-3 mb-1">
+            <div class="card my-3 mx-2 p-3" style="background-color: #DBDFFD;">
+                <img src="<?= base_url('assets/img/uad.webp') ?>" class="card-img-top" alt="...">
             </div>
         </div>
     </div>

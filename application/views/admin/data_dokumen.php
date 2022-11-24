@@ -36,13 +36,14 @@ $stopword = $stopWordRemoverFactory->createStopWordRemover();
             <table class="table text-center table-bordered border-secondary">
                 <thead class="text-light">
                     <tr>
-                        <th scope=" col">No</th>
+                        <th scope="col">No</th>
                         <th scope="col">ID Dokumen</th>
                         <th scope="col">Judul Dokumen</th>
                         <!-- <th scope="col">Stemming</th> -->
                         <th scope="col">Penulis</th>
                         <th scope="col">Tahun</th>
                         <th scope="col">Action</th>
+                        <th scope="col">Stemming</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,6 +65,55 @@ $stopword = $stopWordRemoverFactory->createStopWordRemover();
                         <!-- <td style="text-align: justify;"><i><?= $output ?></i></td> -->
                         <td style="text-align: left;"><?= $dkmn->dokumen_penulis ?></td>
                         <td style="text-align: left;"><?= $dkmn->dokumen_tahun ?></td>
+
+                        <!-- Action  -->
+                        <td class="d-flex gap-2">
+                            <?php 
+                            $url = explode("/",$dkmn->dokumen_id);
+                            $hit_url = count($url);
+                            if ($hit_url == 3) {
+                                $url3 = $url[0].'-'.$url[1].'-'.$url[2];
+
+                                ?><a href="<?= base_url('admin/datadokumen/setidforeditdata/'.$url3); ?>" class="btn"
+                                style="background-color: #D89216; color: white;"><i class="fas fa-pencil-alt"></i></a> <?php
+
+                                ?><a href="<?= base_url('admin/datadokumen/setidfordeldata/'.$url3); ?>" class="btn"
+                                style="background-color: #950101; color: white;"><i class="fas fa-trash-alt"></i></a> <?php
+
+                            } elseif ($hit_url == 4) {
+                                $url4 = $url[0].'-'.$url[1].'-'.$url[2].'-'.$url[3];
+
+                                ?><a href="<?= base_url('admin/datadokumen/setidforeditdata/'.$url4); ?>" class="btn"
+                                style="background-color: #D89216; color: white;"><i class="fas fa-pencil-alt"></i></a> <?php
+
+                                ?><a href="<?= base_url('admin/datadokumen/setidfordeldata/'.$url4); ?>" class="btn"
+                                style="background-color: #950101; color: white;"><i class="fas fa-trash-alt"></i></a> <?php
+
+                            } elseif ($hit_url == 5) {
+                                $url5 = $url[0].'-'.$url[1].'-'.$url[2].'-'.$url[3].'-'.$url[4];
+
+                                ?><a href="<?= base_url('admin/datadokumen/setidforeditdata/'.$url5); ?>" class="btn"
+                                style="background-color: #D89216; color: white;"><i class="fas fa-pencil-alt"></i></a> <?php
+
+                                ?><a href="<?= base_url('admin/datadokumen/setidfordeldata/'.$url5); ?>" class="btn"
+                                style="background-color: #950101; color: white;"><i class="fas fa-trash-alt"></i></a> <?php
+                                    
+                            } elseif ($hit_url == 6) {
+                                $url6 = $url[0].'-'.$url[1].'-'.$url[2].'-'.$url[3].'-'.$url[4].'-'.$url[5];
+
+                                ?><a href="<?= base_url('admin/datadokumen/setidforeditdata/'.$url6); ?>" class="btn"
+                                style="background-color: #D89216; color: white;"><i class="fas fa-pencil-alt"></i></a> <?php
+
+                                ?><a href="<?= base_url('admin/datadokumen/setidfordeldata/'.$url6); ?>" class="btn"
+                                style="background-color: #950101; color: white;"><i class="fas fa-trash-alt"></i></a> <?php
+                                
+                            }
+                            
+                            // $urls = $url[0].'-'.$url[1].'-'.$url[2].'-'.$url[3].'-'.$url[4].'-'.$url[5];
+                            ?>
+
+                        </td>
+                        <!-- Stemming -->
                         <td>
                             <?php 
                             $url = explode("/",$dkmn->dokumen_id);

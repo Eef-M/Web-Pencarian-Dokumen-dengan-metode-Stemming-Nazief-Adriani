@@ -1,3 +1,10 @@
+<style>
+#logo {
+    max-width: 70%;
+    height: auto;
+    margin-bottom: 4px;
+}
+</style>
 <div class="container">
 
     <!-- Outer Row -->
@@ -12,9 +19,10 @@
                         <div class="col-lg">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="mb-2"><span class="badge"
+                                    <img src="<?= base_url('assets/img/uad.webp') ?>" id='logo'>
+                                    <h2 class="my-2"><span class="badge"
                                             style="background-color: #242F9B; color: white;"><b>PENCARIAN
-                                                DOKUMEN</b></span></h1>
+                                                DOKUMEN</b></span></h2>
                                     <hr class="mb-2 text-primary" style="border-radius: 10px; height: 5px;">
                                     <h3 class="mb-4" style="color: #242F9B;"><b>Lupa Password ?</b></h3>
                                 </div>

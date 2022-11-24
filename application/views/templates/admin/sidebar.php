@@ -27,13 +27,13 @@
                     Data Stemming
                 </a>
             </li>
-            <!-- <li class="nav-item mb-2">
+            <li class="nav-item mb-2">
                 <a href="<?= base_url('admin/tambahdata') ?>"
                     class="nav-link <?php if($this->uri->segment(2) == 'tambahdata') echo 'active' ?>">
                     <i class="fas fa-folder-plus me-2 me-2"></i>
                     Tambah Data
                 </a>
-            </li> -->
+            </li>
             <li class="nav-item mb-2">
                 <a href="<?= base_url('auth/logout') ?>" class="nav-link">
                     <i class="fas fa-sign-out-alt me-2"></i>

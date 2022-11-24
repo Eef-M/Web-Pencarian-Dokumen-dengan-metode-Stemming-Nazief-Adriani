@@ -25,6 +25,11 @@ class M_data extends CI_Model {
         $this->db->insert($table, $data);
     }
 
+    function delete_data_dok($where, $table) {
+        $this->db->where($where);
+        $this->db->delete($table);
+    }
+
     // function hapus_data($where,$table){
     //     $this->db->where($where);
     //     $query = $this->db->get('upload');
@@ -90,11 +95,7 @@ class M_data extends CI_Model {
 
     function update_data($where,$data,$table){
 		$this->db->where($where);
-        $query = $this->db->get('document');
-        $row = $query->row();
-
-        unlink("./uploads/$row->file_dokumen");
-		$this->db->update($table,$data, $where);
+		$this->db->update($table,$data);
 	}
 
     function cari_data() {
