@@ -6,8 +6,8 @@
     <div class="w-100 rounded" style="background-color: #9BA3EB; height: 3px;"></div>
     <h5 class="badge p-3 d-flex align-items-center justify-content-center flex-column gap-2"
         style="color: #242F9B; font-size: 16px;">
-        <b>SEMUA HASIL DARI</b>
-        <i><?= $names ?></i>
+        <b><?= $names ?></b>
+        <b class='text-secondary'><?= count($allResult) ?> HASIL</b>
     </h5>
     <div class="w-100 rounded" style="background-color: #9BA3EB; height: 3px;"></div>
 </div>

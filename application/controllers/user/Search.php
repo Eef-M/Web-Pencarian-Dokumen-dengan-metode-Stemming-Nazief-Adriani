@@ -19,6 +19,112 @@ class Search extends CI_Controller {
         header('Cache-Control: post-check=0, pre-check=0',false);
         header('Pragma: no-cache');
     }
+    
+    // public function index() {
+    //     $data['title'] = 'HASIL PENCARIAN DOKUMEN';
+    //     $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+    //     if ($this->input->post('keyword')) {
+    //         $keywords = $this->input->post('keyword');
+
+    //         $expKey = explode(" ", $keywords);
+    //         $arrKey = array();
+
+    //         foreach ($expKey as $ek) {
+    //             $arrKey[] = $ek;
+    //         }
+
+    //         if(!$this->cekKamus($arrKey[0])) {
+    //             $stemmerFactory = new StemmerFactory();
+    //             $stemmer  = $stemmerFactory->createStemmer();
+
+    //             $array = explode(" ", $keywords);
+    //             $stems = array();
+
+    //             foreach ($array as $ar) {
+    //                 $stems[] = $this->akhiran($ar);
+    //             }
+
+    //             $semua = $stemmer->stem($keywords);
+    //             $akhiran = implode(" ", $stems);
+
+    //             $data['semua'] = $semua;
+    //             $data['akhiran'] = $akhiran;
+    //             $data['dokumen'] = $this->m_data->search2();
+    //             $data['doksemua'] = $this->m_data->searchkey($semua);
+    //             $data['dokakhiran'] = $this->m_data->searchkey2($akhiran);
+    //             $data['stemming'] = $this->m_data->search();
+    //         } else {
+
+    //             $array = explode(" ", $this->input->post('keyword'));
+    //             $result = array();
+
+    //             foreach ($array as $arr) {
+    //                 $result[] = $this->tambahImbuhan($arr);
+    //             }
+
+    //             $issetForIfOne = isset($array[1]) ? $array[1] : null;
+    //             $issetForIfTwo = isset($array[2]) ? $array[2] : null;
+
+    //             if ($issetForIfOne == null) {
+                    
+    //                 $NoUnset = $result[0];
+    //                 $gab = implode(" ", $result);
+
+    //                 $pecahArray = explode(" ", $gab);
+
+    //                 unset($pecahArray[1]);
+    //                 $pecahArray = array_values($pecahArray);
+    //                 $isset1 = isset($pecahArray[0]) ? $pecahArray[0] : null;
+    //                 $isset2 = isset($pecahArray[1]) ? $pecahArray[1] : null;
+
+    //                 $data['semua'] = $isset1;
+    //                 $data['akhiran'] = $isset2;
+    //                 $data['dokumen'] = $this->m_data->search2();
+    //                 $data['doksemua'] = $this->m_data->searchkey($isset1);
+    //                 $data['dokakhiran'] = $this->m_data->searchkey2($isset2);
+
+    //             } elseif($issetForIfTwo == null) {
+
+    //                 $joinArrTwoIndex = $result[0].' '.$array[1];
+    //                 $joinArrTwoIndex2 = $result[0].' '.$result[1];
+
+    //                 $data['semua'] = $joinArrTwoIndex;
+    //                 $data['akhiran'] = $joinArrTwoIndex2;
+    //                 $data['dokumen'] = $this->m_data->search2();
+    //                 $data['doksemua'] = $this->m_data->searchkey($joinArrTwoIndex);
+    //                 $data['dokakhiran'] = $this->m_data->searchkey2($joinArrTwoIndex2);
+
+    //             } else {
+
+    //                 $joinArrThreeIndex = $result[0].' '.$array[1].' '.$array[2];
+    //                 $joinArrThreeIndex2 = $result[0].' '.$result[1].' '.$result[2];
+
+    //                 $data['semua'] = $joinArrThreeIndex;
+    //                 $data['akhiran'] = $joinArrThreeIndex2;
+    //                 $data['dokumen'] = $this->m_data->search2();
+    //                 $data['doksemua'] = $this->m_data->searchkey($joinArrThreeIndex);
+    //                 $data['dokakhiran'] = $this->m_data->searchkey2($joinArrThreeIndex2);
+                    
+    //             }
+                    
+                    
+    //         }
+
+    //         $this->load->view('templates/user/header', $data);
+    //         $this->load->view('templates/user/topbar');
+    //         $this->load->view('user/hasil_pencarian', $data);
+    //         $this->load->view('templates/user/footer');
+    //     } else {
+    //         $this->session->set_flashdata('message', '
+    //             <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    //                 <strong>tidak bisa mengakses halaman Pencarian</strong><br>Silahkan masukkan katakunci terlebih dahulu
+    //                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    //             </div>
+    //             ');
+    //             redirect('user/landingpage');
+    //     }
+    // }
 
     public function index() {
         $data['title'] = 'HASIL PENCARIAN DOKUMEN';
@@ -27,93 +133,131 @@ class Search extends CI_Controller {
         if ($this->input->post('keyword')) {
             $keywords = $this->input->post('keyword');
 
-            $expKey = explode(" ", $keywords);
-            $arrKey = array();
+            $expSemua = explode(' ', $keywords);
 
-            foreach ($expKey as $ek) {
-                $arrKey[] = $ek;
-            }
+            $dokumenResult = array();
+            $stemAllResult = array();
+            
+            $addImbuh = array();
+            $baruArr = array();
 
-            if(!$this->cekKamus($arrKey[0])) {
-                $stemmerFactory = new StemmerFactory();
-                $stemmer  = $stemmerFactory->createStemmer();
+            $stemmerFactory = new StemmerFactory();
+            $stemmer  = $stemmerFactory->createStemmer();
+            
+            $theStem = $stemmer->stem($keywords);  
+            $expStem = explode(' ', $theStem);
+            $ArrStrNonDsr = array();
 
-                $array = explode(" ", $keywords);
-                $stems = array();
+            foreach($expSemua as $smm) {
+                if(!$this->cekKamus($smm)) {
+                    $ArrStrNonDsr[] = $smm;
+                    foreach ($expSemua as $esm) {
+                        $dataSearch = $this->dataSearch($esm);
+                        foreach($dataSearch as $value) {
+                            foreach($expSemua as $keyword) {
+                                $value['dokumen_judul'] = preg_replace("/($keyword)/i","<i><b style='background-color:#FFF6BF; color:black;'>$0</b></i>",$value['dokumen_judul']);
+                            }  
+                            $newReplace = $value['dokumen_judul'];
+            
+                            $valueData = array(
+                                'dokumen_id' => $value['dokumen_id'],
+                                'dokumen_judul' => $newReplace,
+                                'dokumen_penulis' => $value['dokumen_penulis'],
+                                'dokumen_tahun' => $value['dokumen_tahun'],
+                            );
+                            $dokumenResult[] = $valueData;
+                        }
+                    }
 
-                foreach ($array as $ar) {
-                    $stems[] = $this->akhiran($ar);
-                }
-
-                $semua = $stemmer->stem($keywords);
-                $akhiran = implode(" ", $stems);
-
-                $data['semua'] = $semua;
-                $data['akhiran'] = $akhiran;
-                $data['dokumen'] = $this->m_data->search2();
-                $data['doksemua'] = $this->m_data->searchkey($semua);
-                $data['dokakhiran'] = $this->m_data->searchkey2($akhiran);
-                $data['stemming'] = $this->m_data->search();
-            } else {
-
-                $array = explode(" ", $this->input->post('keyword'));
-                $result = array();
-
-                foreach ($array as $arr) {
-                    $result[] = $this->tambahImbuhan($arr);
-                }
-
-                $issetForIfOne = isset($array[1]) ? $array[1] : null;
-                $issetForIfTwo = isset($array[2]) ? $array[2] : null;
-
-                if ($issetForIfOne == null) {
-                    
-                    $NoUnset = $result[0];
-                    $gab = implode(" ", $result);
-
-                    $pecahArray = explode(" ", $gab);
-
-                    unset($pecahArray[1]);
-                    $pecahArray = array_values($pecahArray);
-                    $isset1 = isset($pecahArray[0]) ? $pecahArray[0] : null;
-                    $isset2 = isset($pecahArray[1]) ? $pecahArray[1] : null;
-
-                    $data['semua'] = $isset1;
-                    $data['akhiran'] = $isset2;
-                    $data['dokumen'] = $this->m_data->search2();
-                    $data['doksemua'] = $this->m_data->searchkey($isset1);
-                    $data['dokakhiran'] = $this->m_data->searchkey2($isset2);
-
-                } elseif($issetForIfTwo == null) {
-
-                    $joinArrTwoIndex = $result[0].' '.$array[1];
-                    $joinArrTwoIndex2 = $result[0].' '.$result[1];
-
-                    $data['semua'] = $joinArrTwoIndex;
-                    $data['akhiran'] = $joinArrTwoIndex2;
-                    $data['dokumen'] = $this->m_data->search2();
-                    $data['doksemua'] = $this->m_data->searchkey($joinArrTwoIndex);
-                    $data['dokakhiran'] = $this->m_data->searchkey2($joinArrTwoIndex2);
+                    foreach ($expStem as $exStm) {
+                        $dataStemm = $this->dataSearch($exStm);
+                        foreach($dataStemm as $value) {
+                            foreach($expStem as $keyword) {
+                                $value['dokumen_judul'] = preg_replace("/($keyword)/i","<i><b style='background-color:#FFF6BF; color:black;'>$0</b></i>",$value['dokumen_judul']);
+                            }  
+                            $newReplace = $value['dokumen_judul'];
+            
+                            $valueData = array(
+                                'dokumen_id' => $value['dokumen_id'],
+                                'dokumen_judul' => $newReplace,
+                                'dokumen_penulis' => $value['dokumen_penulis'],
+                                'dokumen_tahun' => $value['dokumen_tahun'],
+                            );
+                            $stemAllResult[] = $valueData;
+                        }
+                    }
 
                 } else {
-
-                    $joinArrThreeIndex = $result[0].' '.$array[1].' '.$array[2];
-                    $joinArrThreeIndex2 = $result[0].' '.$result[1].' '.$result[2];
-
-                    $data['semua'] = $joinArrThreeIndex;
-                    $data['akhiran'] = $joinArrThreeIndex2;
-                    $data['dokumen'] = $this->m_data->search2();
-                    $data['doksemua'] = $this->m_data->searchkey($joinArrThreeIndex);
-                    $data['dokakhiran'] = $this->m_data->searchkey2($joinArrThreeIndex2);
+                    foreach ($expSemua as $esm) {
+                        $dataSearchNonPre = $this->dataSearch($esm);
+                        foreach($dataSearchNonPre as $value) {
+                            foreach($expSemua as $keyword) {
+                                $value['dokumen_judul'] = preg_replace("/($keyword)/i","<i><b style='background-color:#FFF6BF; color:black;'>$0</b></i>",$value['dokumen_judul']);
+                            }  
+                            $newReplace = $value['dokumen_judul'];
+                            
+                            $valueData = array(
+                                'dokumen_id' => $value['dokumen_id'],
+                                'dokumen_judul' => $newReplace,
+                                'dokumen_penulis' => $value['dokumen_penulis'],
+                                'dokumen_tahun' => $value['dokumen_tahun'],
+                            );
+                            $dokumenResult[] = $valueData;
+                        }
+                    }
                     
+                    $addImbuh[] = $this->tambahImbuhan($smm);
+                     $newUnstemArr = array();
+                    
+                    foreach ($addImbuh as $plus) {
+                        $pos = strpos($plus, $smm);
+                        if($pos === FALSE) {
+                            $unstemmed = $this->dataUnstemming($addImbuh);
+                            $newUnstemArr[] = $unstemmed;
+                        } else {
+                            $newImbuh = preg_replace('/'.$smm.'/i', $plus, $keywords);
+                            $expNewImbuh = explode(' ', $newImbuh);
+                            
+                            $baruArr[] = $newImbuh;
+                            $unstemmed = $this->dataUnstemming($expNewImbuh);
+                            $newUnstemArr[] = $unstemmed;
+                        }
+                    }
+                        
                 }
-                    
-                    
+            }
+            
+            $arrRevDokRes = array_reverse($dokumenResult);
+            $arrRevStemmRes = array_reverse($stemAllResult);
+            
+            $Ukey = array();
+            $hasilUnstem = array();
+            foreach ($expSemua as $ES) {
+                $Ukey[] = $this->tambahImbuhan($ES);
             }
 
+            if($theStem == $keywords) {
+                $data['dokumen'] = $this->super_unique($arrRevDokRes);
+                $data['allkey'] = NULL;
+            } else {
+                $data['dokumen'] = $this->super_unique($arrRevDokRes);
+                $data['dokstem'] = $this->super_unique($arrRevStemmRes);
+                $data['allkey'] = $theStem;
+            }
+
+           
+            if(empty($newUnstemArr)) {
+                NULL;
+            } else {
+                $superUnstem = $this->dataUnstemming($Ukey);
+                $resNewUnstem = $this->super_unique($superUnstem);
+                $data['dokunstem'] = $resNewUnstem;
+                $data['unstemkey'] = implode(' ', $Ukey); 
+            }
+            
             $this->load->view('templates/user/header', $data);
             $this->load->view('templates/user/topbar');
-            $this->load->view('user/hasil_pencarian', $data);
+            $this->load->view('user/search', $data);
             $this->load->view('templates/user/footer');
         } else {
             $this->session->set_flashdata('message', '
@@ -126,6 +270,56 @@ class Search extends CI_Controller {
         }
     }
 
+    public function super_unique($array) {
+        $result = array_map("unserialize", array_unique(array_map("serialize", $array)));
+
+        foreach ($result as $key => $value) {
+            if ( is_array($value) ) {
+                $result[$key] = $this->super_unique($value);
+            }
+        }
+
+        return $result;
+    }
+
+    public function dataSearch($loop) {
+        $arrSrc = array();
+        $mencariData = $this->m_data->searchkey($loop);
+        foreach(array_slice($mencariData, 0, 2) as $key => $mcd) {
+            $allDataArray = array(
+                'dokumen_id' => $mcd['dokumen_id'],
+                'dokumen_judul' => $mcd['dokumen_judul'],
+                'dokumen_penulis' => $mcd['dokumen_penulis'],
+                'dokumen_tahun' => $mcd['dokumen_tahun'],
+            );
+            $arrSrc[] = $allDataArray;
+        }
+        return $arrSrc;
+    }
+
+    public function dataUnstemming($array) {
+        $newArray = array();
+        foreach ($array as $arr) {
+            $dataSearch = $this->dataSearch($arr);
+            foreach($dataSearch as $value) {
+                foreach($array as $keyword) {
+                    $value['dokumen_judul'] = preg_replace("/($keyword)/i","<i><b style='background-color:#FFF6BF; color:black;'>$0</b></i>",$value['dokumen_judul']);
+                }  
+                $newReplace = $value['dokumen_judul'];
+
+                $valueData = array(
+                    'dokumen_id' => $value['dokumen_id'],
+                    'dokumen_judul' => $newReplace,
+                    'dokumen_penulis' => $value['dokumen_penulis'],
+                    'dokumen_tahun' => $value['dokumen_tahun'],
+                );
+                $newArray[] = $valueData;
+            }
+        }
+
+        return $newArray;
+    }
+            
     public function SetIdForDok($id) {
         $ids = explode("-", $id);
         $hit_id = count($ids);
@@ -190,7 +384,7 @@ class Search extends CI_Controller {
 
     // tambah imbuhan
     public function tambahImbuhan($kata) {
-        $kataAsal = $kata;
+        $kataAsli = $kata;
         if ($kata == 'belajar') {
             $__kata = preg_replace('/^/','pem',$kata);
             if($__kata) {
@@ -216,8 +410,7 @@ class Search extends CI_Controller {
             }
         }
         
-
-        if ($this->cekKamus($kata)) {
+        if ($this->cekKamus($kataAsli)) {
 
             if ($kata == 'basis') {
                 if(preg_match('/^(b)[aiueo]\S{1,}/',$kata)) {
@@ -456,7 +649,7 @@ class Search extends CI_Controller {
                         $__kata__2 = preg_replace('/(an)$/','an',$__kata2);
                     }
 
-                    return $__kata__." - ".$__kata__2; 
+                    return $__kata__2; 
                 }
 
                 if(preg_match('/^(g)[aiueo]\S{1,}/',$kata)) {
@@ -470,12 +663,12 @@ class Search extends CI_Controller {
                         $__kata__2 = preg_replace('/(an)$/','kan',$__kata2);
                     }
 
-                    return $__kata__." - ".$__kata__2; 
+                    return $__kata__2; 
                 }
             }
         }
 
-        if ($this->cekKamus($kata)) {
+        if ($this->cekKamus($kataAsli)) {
             if(preg_match('/^(k)[aiueo]\S{1,}/',$kata)) {
                 $__kata = preg_replace('/^(k)/','penge',$kata);
                 if($__kata) {
@@ -487,7 +680,7 @@ class Search extends CI_Controller {
             }
         }
 
-        return $kataAsal;
+        return $kataAsli;
     }
 
 

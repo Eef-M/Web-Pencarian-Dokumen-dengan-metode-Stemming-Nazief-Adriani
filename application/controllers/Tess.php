@@ -15,28 +15,520 @@ class Tess extends CI_Controller {
         $this->load->model('m_data');
         $this->load->model('m_imbuhan');
     }
-
+    
     public function index() {
-        $teks = "aman_tentram";
+        // $str = "SISTEM PENDUKUNG KEPUTUSAN PENEMPATAN PENYULUH PERTANIAN MENGGUNAKAN KRITERIA BAYES";
 
-        // $has = explode(" ", $teks);
-        // $iss = isset($has[1]) ? $has[1] : null;
-        $has2 = explode("_", $teks);
-        $sm2 = implode(" ", $has2);
+        $cari = 'menggunakan bayes';
+        $expSemua = explode(' ', $cari);
 
-        echo $sm2;
+        $hs_1 = array();
+        $hs_2 = array();
+        $hs_3 = array();
+        $hs_4 = array();
+        $addImbuh = array();
+
+        $stemmerFactory = new StemmerFactory();
+        $stemmer  = $stemmerFactory->createStemmer();
+        
+        $theStem = $stemmer->stem($cari);  
+        $expStem = explode(' ', $theStem);
+
+        foreach($expSemua as $smm) {
+            if(!$this->cekKamus($smm)) {
+                foreach ($expSemua as $esm) {
+                    $dataSearch = $this->dataSearch($esm);
+                    foreach($dataSearch as $value) {
+                        foreach($expSemua as $keyword) {
+                            $value['dokumen_judul'] = preg_replace("/($keyword)/i","<i><b style='background-color:#FFF6BF; color:black;'>$0</b></i>",$value['dokumen_judul']);
+                        }  
+                        $newReplace = $value['dokumen_judul'];
+        
+                        $valueData = array(
+                            'dokumen_id' => $value['dokumen_id'],
+                            'dokumen_judul' => $newReplace,
+                            'dokumen_penulis' => $value['dokumen_penulis'],
+                            'dokumen_tahun' => $value['dokumen_tahun'],
+                        );
+                        $hs_1[] = $valueData;
+                    }
+                }
+
+                foreach ($expStem as $exStm) {
+                    $dataStemm = $this->dataSearch($exStm);
+                    foreach($dataStemm as $value) {
+                        foreach($expStem as $keyword) {
+                            $value['dokumen_judul'] = preg_replace("/($keyword)/i","<i><b style='background-color:#FFF6BF; color:black;'>$0</b></i>",$value['dokumen_judul']);
+                        }  
+                        $newReplace = $value['dokumen_judul'];
+        
+                        $valueData = array(
+                            'dokumen_id' => $value['dokumen_id'],
+                            'dokumen_judul' => $newReplace,
+                            'dokumen_penulis' => $value['dokumen_penulis'],
+                            'dokumen_tahun' => $value['dokumen_tahun'],
+                        );
+                        $hs_2[] = $valueData;
+                    }
+                }
+            } else {
+                foreach ($expSemua as $esm) {
+                    $dataSearchNonPre = $this->dataSearch($esm);
+                    foreach($dataSearchNonPre as $value) {
+                        foreach($expSemua as $keyword) {
+                            $value['dokumen_judul'] = preg_replace("/($keyword)/i","<i><b style='background-color:#FFF6BF; color:black;'>$0</b></i>",$value['dokumen_judul']);
+                        }  
+                        $newReplace = $value['dokumen_judul'];
+        
+                        $valueData = array(
+                            'dokumen_id' => $value['dokumen_id'],
+                            'dokumen_judul' => $newReplace,
+                            'dokumen_penulis' => $value['dokumen_penulis'],
+                            'dokumen_tahun' => $value['dokumen_tahun'],
+                        );
+                        $hs_3[] = $valueData;
+                    }
+                }
+
+                $ResImbuh = $this->tambahImbuhan($smm);
+                $addImbuh[] = $ResImbuh;
+                $newUnstemArr = array();
+                foreach ($addImbuh as $plus) {
+                    foreach ($expSemua as $esm) {
+                        $pos = strpos($plus, $esm);
+                        if($pos === FALSE) {
+                            $unstemmed = $this->dataUnstemming($addImbuh);
+                            $newUnstemArr[] = $unstemmed;
+                        } else {
+                            $newImbuh = preg_replace('/'.$esm.'/i', $plus, $cari);
+                            $expNewImbuh = explode(' ', $newImbuh);
+                            $unstemmed = $this->dataUnstemming($expNewImbuh);
+                            $newUnstemArr[] = $unstemmed;
+                        }
+                    }
+                }
+            }
+        }
+
+        if(empty($newUnstemArr)) {
+            NULL;
+        } else {
+            $resUnstem = $newUnstemArr[0];
+            $Hasil_4 = $this->super_unique($resUnstem);
+            print '<pre>';
+            print_r($Hasil_4);
+            print '</pre>';
+
+            foreach ($Hasil_4 as $d4) {
+                echo $d4['dokumen_id'].'<br>';
+                echo $d4['dokumen_judul'].'<br><br>';
+            }
+        }
+
         
 
-        // if($iss == null) {
-        //     echo $teks;
-        //     echo "<br>-------------------------------------<br>";
-        // } else {
-        //     $sm = $has[0]."_".$has[1];
-            
-        //     echo $sm;
-        //     echo "<br>-------------------------------------<br>";
-        //     echo $sm2;
-        // }
+        
+        echo '<br> -------------------------------------------------------'.$cari.'------------------------------------------------------------ <br>';
+        
+        $Hasil_1 = $this->super_unique($hs_1);
+        print '<pre>';
+        print_r($Hasil_1);
+        print '</pre>';
+
+        foreach ($Hasil_1 as $d1) {
+            echo $d1['dokumen_id'].'<br>';
+            echo $d1['dokumen_judul'].'<br><br>';
+        }
+
+        $cariStem = implode(' ', $expStem);
+        echo '<br> ----------------------------------------------------'.$cariStem.'--------------------------------------------------------------- <br>';
+
+        $Hasil_2 = $this->super_unique($hs_2);
+        print '<pre>';
+        print_r($Hasil_2);
+        print '</pre>';
+
+        foreach ($Hasil_2 as $d2) {
+            echo $d2['dokumen_id'].'<br>';
+            echo $d2['dokumen_judul'].'<br><br>';
+        }
+
+        echo '<br> -------------------------------------------------------'.$cari.'------------------------------------------------------------ <br>';
+        
+        $Hasil_3 = $this->super_unique($hs_3);
+        print '<pre>';
+        print_r($Hasil_3);
+        print '</pre>';
+
+        foreach ($Hasil_3 as $d3) {
+            echo $d3['dokumen_id'].'<br>';
+            echo $d3['dokumen_judul'].'<br><br>';
+        }
+
+        echo empty($impNewImbuh) ? NULL : '<h3>'.$impNewImbuh.'</h3>'  ;
+        
+        $Hasil_4 = $this->super_unique($hs_4);
+        print '<pre>';
+        print_r($Hasil_4);
+        print '</pre>';
+
+        foreach ($Hasil_4 as $d4) {
+            echo $d4['dokumen_id'].'<br>';
+            echo $d4['dokumen_judul'].'<br><br>';
+        }
+
+    }
+
+    public function super_unique($array) {
+        $result = array_map("unserialize", array_unique(array_map("serialize", $array)));
+
+        foreach ($result as $key => $value) {
+            if ( is_array($value) ) {
+                $result[$key] = $this->super_unique($value);
+            }
+        }
+
+        return $result;
+    }
+
+    public function dataUnstemming($array) {
+        $newArray = array();
+        foreach ($array as $arr) {
+            $dataSearch = $this->dataSearch($arr);
+            foreach($dataSearch as $value) {
+                foreach($array as $keyword) {
+                    $value['dokumen_judul'] = preg_replace("/($keyword)/i","<i><b style='background-color:#FFF6BF; color:black;'>$0</b></i>",$value['dokumen_judul']);
+                }  
+                $newReplace = $value['dokumen_judul'];
+
+                $valueData = array(
+                    'dokumen_id' => $value['dokumen_id'],
+                    'dokumen_judul' => $newReplace,
+                    'dokumen_penulis' => $value['dokumen_penulis'],
+                    'dokumen_tahun' => $value['dokumen_tahun'],
+                );
+                $newArray[] = $valueData;
+            }
+        }
+
+        return $newArray;
+    }
+
+    public function dataSearch($loop) {
+        $arrSrc = array();
+        $mencariData = $this->m_data->searchkey($loop);
+        foreach(array_slice($mencariData, 0, 2) as $key => $mcd) {
+            $allDataArray = array(
+                'dokumen_id' => $mcd['dokumen_id'],
+                'dokumen_judul' => $mcd['dokumen_judul'],
+                'dokumen_penulis' => $mcd['dokumen_penulis'],
+                'dokumen_tahun' => $mcd['dokumen_tahun'],
+            );
+            $arrSrc[] = $allDataArray;
+        }
+        return $arrSrc;
+    }
+
+    // tambah imbuhan
+    public function tambahImbuhan($kata) {
+        $kataAsal = $kata;
+        if ($kata == 'belajar') {
+            $__kata = preg_replace('/^/','pem',$kata);
+            if($__kata) {
+                $__kata__ = preg_replace('/$/','an',$__kata);
+                return $__kata__;
+            } else {
+                return $kata;
+            }
+        }
+
+        if ($kata == 'diagnosa') {
+            $__kata = preg_replace('/^/','men',$kata);
+            return $__kata;
+        }
+
+        if ($kata == 'nyaman') {
+            $__kata = preg_replace('/^/','ke',$kata);
+            if($__kata) {
+                $__kata__ = preg_replace('/$/','an',$__kata);
+                return $__kata__;
+            } else {
+                return $kata;
+            }
+        }
+        
+
+        if ($this->cekKamus($kata)) {
+
+            if ($kata == 'basis') {
+                if(preg_match('/^(b)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^/','ber',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+            } elseif ($kata == "tani") {
+
+                if(preg_match('/^(t)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^/','per',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+
+            } elseif ($kata == "sambung") {
+
+                if(preg_match('/^(s)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^(s)/','peny',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+
+            } elseif ($kata == "dagang") {
+
+                if(preg_match('/^(d)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^/','per',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+
+            } elseif ($kata == "dasar") {
+
+                if(preg_match('/^(d)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^/','ber',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','kan',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+
+            } elseif ($kata == "pecah") {
+
+                if(preg_match('/^(p)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^(p)/','pem',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+
+            } elseif ($kata == "guru") {
+
+                if(preg_match('/^(g)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^/','per',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+
+            } else {
+
+                if(preg_match('/^(anc)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^/','per',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+
+                if(preg_match('/^(aj)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^/','pel',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+
+                if(preg_match('/^(aks)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^/','peng',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+
+                if(preg_match('/^(b)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^/','pem',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+
+                if(preg_match('/^(c)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^/','ke',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+
+                if(preg_match('/^(k)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^(k)/','peng',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+    
+                if(preg_match('/^(t)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^(t)/','pen',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+    
+                if(preg_match('/^(d)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^/','pen',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+
+                if(preg_match('/^(p)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^/','ke',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+
+                if(preg_match('/^(l)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^/','pe',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+
+                if(preg_match('/^(m)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^/','me',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','kan',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+
+                if(preg_match('/^(u)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^/','ke',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+
+                if(preg_match('/^(s)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^/','per',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+
+                if(preg_match('/^(r)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^/','pe',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
+                }
+
+                // 2 Hasil
+                // guna, aman
+                if(preg_match('/^(am)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^/','peng',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        
+                    } 
+                    $__kata2 = preg_replace('/^(peng)/', 'ke', $__kata__);
+                    if ($__kata2) {
+                        $__kata__2 = preg_replace('/(an)$/','an',$__kata2);
+                    }
+
+                    return $__kata__2; 
+                }
+
+                if(preg_match('/^(g)[aiueo]\S{1,}/',$kata)) {
+                    $__kata = preg_replace('/^/','peng',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        
+                    } 
+                    $__kata2 = preg_replace('/^(peng)/', 'meng', $__kata__);
+                    if ($__kata2) {
+                        $__kata__2 = preg_replace('/(an)$/','kan',$__kata2);
+                    }
+
+                    return $__kata__2; 
+                }
+            }
+        }
+
+        if ($this->cekKamus($kata)) {
+            if(preg_match('/^(k)[aiueo]\S{1,}/',$kata)) {
+                $__kata = preg_replace('/^(k)/','penge',$kata);
+                if($__kata) {
+                    $__kata__ = preg_replace('/$/','an',$__kata);
+                    return $__kata__;
+                } else {
+                    return $__kata;
+                }
+            }
+        }
+
+        return $kataAsal;
     }
 
     public function isPlural($word)
