@@ -37,8 +37,6 @@
 
             <a href="<?= base_url('user/search/setidfordok/' . $url3) ?>" class="btn text-white"
                 style="background-color: #242F9B;">Detail Data</a>
-            <a href="<?= base_url('user/search/setidforstem/' . $url3) ?>" class="btn text-white"
-                style="background-color: #242F9B;">Data Stemming</a>
 
             <?php
                 } elseif ($hit_url == 4) {
@@ -47,8 +45,6 @@
 
             <a href="<?= base_url('user/search/setidfordok/' . $url4) ?>" class="btn text-white"
                 style="background-color: #242F9B;">Detail Data</a>
-            <a href="<?= base_url('user/search/setidforstem/' . $url4) ?>" class="btn text-white"
-                style="background-color: #242F9B;">Data Stemming</a>
 
             <?php
                 } elseif ($hit_url == 5) {
@@ -57,8 +53,6 @@
 
             <a href="<?= base_url('user/search/setidfordok/' . $url5) ?>" class="btn text-white"
                 style="background-color: #242F9B;">Detail Data</a>
-            <a href="<?= base_url('user/search/setidforstem/' . $url5) ?>" class="btn text-white"
-                style="background-color: #242F9B;">Data Stemming</a>
 
             <?php
                 } elseif ($hit_url == 6) {
@@ -67,8 +61,6 @@
 
             <a href="<?= base_url('user/search/setidfordok/' . $url6) ?>" class="btn text-white"
                 style="background-color: #242F9B;">Detail Data</a>
-            <a href="<?= base_url('user/search/setidforstem/' . $url6) ?>" class="btn text-white"
-                style="background-color: #242F9B;">Data Stemming</a>
 
             <?php } ?>
 

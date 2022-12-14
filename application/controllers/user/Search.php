@@ -129,6 +129,7 @@ class Search extends CI_Controller {
                 $Ukey[] = $this->tambahImbuhan($ES);
             }
 
+            
             if($theStem == $keywords) {
                 $data['dokumen'] = $this->super_unique($arrRevDokRes);
                 $data['allkey'] = NULL;
@@ -144,8 +145,15 @@ class Search extends CI_Controller {
             } else {
                 $superUnstem = $this->dataUnstemming($Ukey);
                 $resNewUnstem = $this->super_unique($superUnstem);
-                $data['dokunstem'] = $resNewUnstem;
-                $data['unstemkey'] = implode(' ', $Ukey); 
+                $KeyOfUnstem = implode(' ', $Ukey); 
+                
+                if($KeyOfUnstem == $keywords) {
+                    $data['dokunstem'] = NULL;
+                    $data['unstemkey'] = NULL;
+                } else {
+                    $data['dokunstem'] = $resNewUnstem;
+                    $data['unstemkey'] = $KeyOfUnstem;
+                }
             }
             
             $this->load->view('templates/user/header', $data);
@@ -232,25 +240,6 @@ class Search extends CI_Controller {
         }
     }
 
-    public function SetIdForStem($id) {
-        $ids = explode("-", $id);
-        $hit_id = count($ids);
-
-        if ($hit_id == 3) {
-            $id3 = $ids[0].'/'.$ids[1].'/'.$ids[2];
-            $this->detailStem($id3);
-        } elseif ($hit_id == 4) {
-            $id4 = $ids[0].'/'.$ids[1].'/'.$ids[2].'/'.$ids[3];
-            $this->detailStem($id4);
-        } elseif ($hit_id == 5) {
-            $id5 = $ids[0].'/'.$ids[1].'/'.$ids[2].'/'.$ids[3].'/'.$ids[4];
-            $this->detailStem($id5);
-        } elseif ($hit_id == 6) {
-            $id6 = $ids[0].'/'.$ids[1].'/'.$ids[2].'/'.$ids[3].'/'.$ids[4].'/'.$ids[5];
-            $this->detailStem($id6);
-        }
-    }
-
     public function detailDok($id) {
         $where = array('dokumen_id' => $id);
         $data['dokumen'] = $this->m_data->detail_data($where, 'tabel_dokumen')->result();
@@ -260,18 +249,6 @@ class Search extends CI_Controller {
         $this->load->view('templates/user/header', $data);
         $this->load->view('templates/user/topbar');
         $this->load->view('user/detail_data', $data);
-        $this->load->view('templates/user/footer');
-    }
-
-    public function detailStem($id) {
-        $where = array('dokumen_id' => $id);
-        $data['stemming'] = $this->m_data->detail_data($where, 'tabel_stemming')->result();
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['title'] = "DETAIL STEMMING";
-        
-        $this->load->view('templates/user/header', $data);
-        $this->load->view('templates/user/topbar');
-        $this->load->view('user/tampil_token', $data);
         $this->load->view('templates/user/footer');
     }
 
@@ -304,7 +281,7 @@ class Search extends CI_Controller {
         }
         
         if ($this->cekKamus($kataAsli)) {
-
+             
             if ($kata == 'basis') {
                 if(preg_match('/^(b)[aiueo]\S{1,}/',$kata)) {
                     $__kata = preg_replace('/^/','ber',$kata);
@@ -388,6 +365,11 @@ class Search extends CI_Controller {
                 }
 
             } else {
+              
+                // Kata yang tidak diinginkan
+                if($kata == "media") {
+                    return $kata;
+                }
 
                 if(preg_match('/^(anc)[aiueo]\S{1,}/',$kata)) {
                     $__kata = preg_replace('/^/','per',$kata);
@@ -558,6 +540,8 @@ class Search extends CI_Controller {
 
                     return $__kata__2; 
                 }
+
+                
             }
         }
 
