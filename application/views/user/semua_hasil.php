@@ -64,12 +64,9 @@
 
             <?php } ?>
 
-
-
         </div>
     </div>
 
-    <!-- </a> -->
 </div>
 
 <?php endforeach ?>

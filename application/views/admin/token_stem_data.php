@@ -1,8 +1,5 @@
 <div class="container-fluid pt-4 px-4 mb-4">
     <div class="rounded p-4 h-100" id="ThePage">
-        <!-- <div class="mb-2">
-            <a href="<?= base_url('user/landingpage') ?>" class="btn btn-secondary">Kembali</a>
-        </div> -->
         <h3 class="mb-4 text-center">DATA STEMMING DAN TOKEN</h3>
         <hr class="mb-4" style="border-radius: 3px; height: 5px; color: #646FD4">
         <?= $this->session->flashdata('message') ?>

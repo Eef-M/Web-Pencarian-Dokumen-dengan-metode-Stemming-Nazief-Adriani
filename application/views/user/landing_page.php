@@ -12,25 +12,3 @@
         </div>
     </div>
 </div>
-<!-- 
-<div class="container">
-    <div class="card text-center my-4 mx-4 bg-dark">
-        <div class="card-body">
-            <form action="" method="post">
-                <div class="input-group form-container">
-                    <input type="text" name="search" class="form-control border border-primary"
-                        placeholder="Cari Dokumen ..." autocomplete="off" autofocus>
-                    <button style="background-color: #2155CD;" type="submit" class="btn text-white">Cari</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> -->
-
-<!-- <div class="container pt-4 px-4 bg-warning">
-    <div class="row vh-100 rounded align-items-center justify-content-center">
-        <div class="col-md-6 text-center bg-dark">
-            <h3>DASHBOARD</h3>
-        </div>
-    </div>
-</div> -->

@@ -8,7 +8,6 @@ use \Smalot\PdfParser\Parser;
 use \TextAnalysis\Tokenizers\PennTreeBankTokenizer;
 
 class Search extends CI_Controller { 
-
     
     public function __construct()
     {
@@ -31,7 +30,6 @@ class Search extends CI_Controller {
 
             $dokumenResult = array();
             $stemAllResult = array();
-            $ArrStrNonDsr = array();
             $addImbuh = array();
             $baruArr = array();
 
@@ -43,7 +41,6 @@ class Search extends CI_Controller {
 
             foreach($expSemua as $smm) {
                 if(!$this->cekKamus($smm)) {
-                    $ArrStrNonDsr[] = $smm;
                     foreach ($expSemua as $esm) {
                         $dataSearch = $this->dataSearch($esm);
                         foreach($dataSearch as $value) {
@@ -100,7 +97,7 @@ class Search extends CI_Controller {
                     }
                     
                     $addImbuh[] = $this->tambahImbuhan($smm);
-                     $newUnstemArr = array();
+                    $newUnstemArr = array();
                     
                     foreach ($addImbuh as $plus) {
                         $pos = strpos($plus, $smm);

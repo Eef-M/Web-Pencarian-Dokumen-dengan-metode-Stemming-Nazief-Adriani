@@ -16,7 +16,6 @@ class Stemming extends CI_Controller {
         is_logged_in();
     }
     
-
     public function index() {
         echo "NOT FOUND";
     }
@@ -200,7 +199,6 @@ class Stemming extends CI_Controller {
     public function stemAll() {
         $data = $this->m_data->tampil_data()->result();
         foreach($data as $dt) {
-            // if($dt->active == 0) {
                 $text = $dt->dokumen_judul;
                 $id_dok = $dt->dokumen_id;
 
@@ -242,13 +240,8 @@ class Stemming extends CI_Controller {
                         'active' => 1
                     );
             
-                    // $this->m_data->update_active($id_dok, $data_active, 'tabel_dokumen');
                     $this->m_data->set_active($data_active);
                 }
-
-            // } else {
-                
-            // }
         }
 
         if($ress == false) {

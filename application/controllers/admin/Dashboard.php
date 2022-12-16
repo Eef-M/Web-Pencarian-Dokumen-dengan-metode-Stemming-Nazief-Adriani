@@ -10,7 +10,6 @@ class Dashboard extends CI_Controller {
         $this->load->model('m_data');
         is_logged_in();
     }
-    
 
     public function index() {
         $data['title'] = "ADMIN | DASHBOARD";

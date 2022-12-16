@@ -108,8 +108,6 @@ require_once('../pds-na/application/views/user/func/manual.php');
 
             <?php } ?>
 
-
-
         </div>
     </div>
 </div>
@@ -216,8 +214,6 @@ require_once('../pds-na/application/views/user/func/manual.php');
 
         </div>
     </div>
-
-    <!-- </a> -->
 </div>
 
 <?php endforeach ?>
@@ -321,8 +317,6 @@ require_once('../pds-na/application/views/user/func/manual.php');
 
         </div>
     </div>
-
-    <!-- </a> -->
 </div>
 
 <?php endforeach ?>

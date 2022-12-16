@@ -39,7 +39,6 @@ $stopword = $stopWordRemoverFactory->createStopWordRemover();
                         <th scope="col">No</th>
                         <th scope="col">ID Dokumen</th>
                         <th scope="col">Judul Dokumen</th>
-                        <!-- <th scope="col">Stemming</th> -->
                         <th scope="col">Penulis</th>
                         <th scope="col">Tahun</th>
                         <th scope="col">Action</th>
@@ -62,7 +61,6 @@ $stopword = $stopWordRemoverFactory->createStopWordRemover();
                         <th scope="row"><?= $no++ ?></th>
                         <td><?= $dkmn->dokumen_id ?></td>
                         <td style="text-align: justify;"><?= $dkmn->dokumen_judul ?></td>
-                        <!-- <td style="text-align: justify;"><i><?= $output ?></i></td> -->
                         <td style="text-align: left;"><?= $dkmn->dokumen_penulis ?></td>
                         <td style="text-align: left;"><?= $dkmn->dokumen_tahun ?></td>
 
@@ -109,7 +107,6 @@ $stopword = $stopWordRemoverFactory->createStopWordRemover();
                                 
                             }
                             
-                            // $urls = $url[0].'-'.$url[1].'-'.$url[2].'-'.$url[3].'-'.$url[4].'-'.$url[5];
                             ?>
 
                         </td>
@@ -179,18 +176,10 @@ $stopword = $stopWordRemoverFactory->createStopWordRemover();
                             <?php
                             }
                             
-                            // $urls = $url[0].'-'.$url[1].'-'.$url[2].'-'.$url[3].'-'.$url[4].'-'.$url[5];
                             ?>
 
                         </td>
                     </tr>
-                    <!-- <?php
-                        foreach ($token as $tkn) {
-                            $outputstopword2 = $stopword->remove($tkn);
-                            $output2 = $stemmer->stem($outputstopword2);
-                            echo $output2."<br>";
-                        }
-                    ?> -->
                     <?php 
                 } ?>
                 </tbody>
