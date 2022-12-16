@@ -370,6 +370,12 @@ class Search extends CI_Controller {
                 if($kata == "media") {
                     return $kata;
                 }
+                if($kata == "sistem") {
+                    return $kata;
+                }
+                if($kata == "sekolah") {
+                    return $kata;
+                }
 
                 if(preg_match('/^(anc)[aiueo]\S{1,}/',$kata)) {
                     $__kata = preg_replace('/^/','per',$kata);
