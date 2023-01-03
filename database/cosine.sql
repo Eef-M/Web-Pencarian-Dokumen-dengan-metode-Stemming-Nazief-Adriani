@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 18 Nov 2022 pada 15.31
+-- Waktu pembuatan: 03 Jan 2023 pada 07.31
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 7.4.29
 
@@ -20,91 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `cosine`
 --
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `confixes`
---
-
-CREATE TABLE `confixes` (
-  `confixes_id` varchar(128) NOT NULL,
-  `data` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `confixes`
---
-
-INSERT INTO `confixes` (`confixes_id`, `data`) VALUES
-('ber_an', 'ber-an'),
-('ke_an', 'ke-an'),
-('pem_an', 'pem-an'),
-('penge_an', 'penge-an'),
-('peng_an', 'peng-an'),
-('peny_an', 'peny-an'),
-('pen_an', 'pen-an'),
-('per_an', 'per-an'),
-('pe_an', 'pe-an'),
-('se_nya', 'se-nya');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `prefixes`
---
-
-CREATE TABLE `prefixes` (
-  `prefixes_id` varchar(128) NOT NULL,
-  `data` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `prefixes`
---
-
-INSERT INTO `prefixes` (`prefixes_id`, `data`) VALUES
-('ber', 'ber-'),
-('di', 'di-'),
-('ke', 'ke-'),
-('me', 'me-'),
-('mem', 'mem-'),
-('men', 'men-'),
-('meng', 'meng-'),
-('menge', 'menge-'),
-('meny', 'meny-'),
-('pe', 'pe-'),
-('pem', 'pem-'),
-('pen', 'pen-'),
-('peng', 'peng-'),
-('penge', 'penge-'),
-('peny', 'peny-'),
-('per', 'per-'),
-('se', 'se-'),
-('ter', 'ter-');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `suffixes`
---
-
-CREATE TABLE `suffixes` (
-  `suffixes_id` varchar(128) NOT NULL,
-  `data` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `suffixes`
---
-
-INSERT INTO `suffixes` (`suffixes_id`, `data`) VALUES
-('an', '-an'),
-('i', '-i'),
-('kah', '-kah'),
-('kan', '-kan'),
-('lah', '-lah'),
-('nya', '-nya');
 
 -- --------------------------------------------------------
 
@@ -2177,62 +2092,6 @@ INSERT INTO `tabel_dokumen` (`dokumen_id`, `dokumen_judul`, `dokumen_penulis`, `
 ('T/073/DOS/2006/SINF/3', 'IMPLEMENTASI DAN PENGUJIAN INTEROPERABILITAS ANTARA APACHE SOAP DAN NUSOAP', 'TAWAR', 2006, 8.7104, 0),
 ('T/075/DOS/2010/INF/3', 'IMPLEMENTASI WEB SERVICE PADA SISTEM INFORMASI TERINTEGRASI TUGAS AKHIR  MAHASISWA STRATA 1 (STUDI KASUS: UAD YOGYAKARTA)', 'HASANUDDIN', 2010, 9.7601, 0),
 ('T/095/DOS/2013/TINF/3', 'PEMODELAN ARSITEKTUR ENTERPRISE DI MUHAMMADIYAH DISASTER MANAGEMENT CENTER  (MDMC)', 'KHUSNA ARFIANI NUR', 2013, 9.0362, 0);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `tabel_imbuhan`
---
-
-CREATE TABLE `tabel_imbuhan` (
-  `imbuhan_id` int(11) NOT NULL,
-  `kata_dasar` varchar(128) NOT NULL,
-  `ber_` varchar(128) NOT NULL,
-  `di_` varchar(128) NOT NULL,
-  `ke_` varchar(128) NOT NULL,
-  `me_` varchar(128) NOT NULL,
-  `mem_` varchar(128) NOT NULL,
-  `men_` varchar(128) NOT NULL,
-  `meng_` varchar(128) NOT NULL,
-  `menge_` varchar(128) NOT NULL,
-  `meny_` varchar(128) NOT NULL,
-  `pe_` varchar(128) NOT NULL,
-  `pem_` varchar(128) NOT NULL,
-  `pen_` varchar(128) NOT NULL,
-  `peng_` varchar(128) NOT NULL,
-  `penge_` varchar(128) NOT NULL,
-  `peny_` varchar(128) NOT NULL,
-  `per_` varchar(128) NOT NULL,
-  `se_` varchar(128) NOT NULL,
-  `ter_` varchar(128) NOT NULL,
-  `_an` varchar(128) NOT NULL,
-  `_i` varchar(128) NOT NULL,
-  `_kah` varchar(128) NOT NULL,
-  `_kan` varchar(128) NOT NULL,
-  `_lah` varchar(128) NOT NULL,
-  `_nya` varchar(128) NOT NULL,
-  `ber_an` varchar(128) NOT NULL,
-  `ke_an` varchar(128) NOT NULL,
-  `pem_an` varchar(128) NOT NULL,
-  `penge_an` varchar(128) NOT NULL,
-  `peng_an` varchar(128) NOT NULL,
-  `peny_an` varchar(128) NOT NULL,
-  `pen_an` varchar(128) NOT NULL,
-  `per_an` varchar(128) NOT NULL,
-  `pe_an` varchar(128) NOT NULL,
-  `se_nya` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `tabel_imbuhan`
---
-
-INSERT INTO `tabel_imbuhan` (`imbuhan_id`, `kata_dasar`, `ber_`, `di_`, `ke_`, `me_`, `mem_`, `men_`, `meng_`, `menge_`, `meny_`, `pe_`, `pem_`, `pen_`, `peng_`, `penge_`, `peny_`, `per_`, `se_`, `ter_`, `_an`, `_i`, `_kah`, `_kan`, `_lah`, `_nya`, `ber_an`, `ke_an`, `pem_an`, `penge_an`, `peng_an`, `peny_an`, `pen_an`, `per_an`, `pe_an`, `se_nya`) VALUES
-(1, 'aman', '', 'diaman', 'keaman', '', '', '', 'mengaman', '', '', '', '', '', 'pengaman', '', '', '', '', '', 'amanan', 'amani', '', 'amankan', '', '', '', 'keamanan', '', '', 'pengamanan', '', '', '', '', ''),
-(2, 'layan', 'berlayan', 'dilayan', '', 'melayan', '', '', '', '', '', 'pelayan', '', '', '', '', '', '', '', '', 'layanan', 'layani', '', 'layankan', '', '', 'berlayanan', '', '', '', '', '', '', '', 'pelayanan', ''),
-(3, 'kelola', 'berkelola', 'dikelola', '', '', '', '', 'mengelola', '', '', '', '', '', 'pengelola', '', '', '', '', '', 'kelolaan', '', '', 'kelolakan', '', '', 'berkelolaan', '', '', '', 'pengelolaan', '', '', '', '', ''),
-(4, 'tingkat', 'bertingkat', 'ditingkat', '', '', '', 'meningkat', '', '', '', '', '', 'peningkat', '', '', '', '', '', '', 'tingkatan', '', '', 'tingkatkan', '', 'tingkatnya', 'bertingkatan', '', '', '', '', '', 'peningkatan', '', '', ''),
-(5, 'basis', 'berbasis', '', '', '', 'membasis', '', '', '', '', '', 'pembasis', '', '', '', '', '', '', '', 'basisan', '', '', 'basiskan', '', '', '', '', 'pembasisan', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -32756,7 +32615,6 @@ INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (2119, 'barut', 'Nomina'),
 (2120, 'barzakh', 'Nomina'),
 (2121, 'barzanji', 'Nomina'),
-(2122, 'bas', 'Nomina'),
 (2123, 'basa', 'Nomina'),
 (2124, 'basah', 'Adjektiva'),
 (2125, 'basal', 'Nomina'),
@@ -34351,9 +34209,9 @@ INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (3714, 'candradimuka', 'Nomina'),
 (3715, 'candramawa', 'Adjektiva'),
 (3716, 'candrasa', 'Nomina'),
-(3717, 'candrasengkala', 'Nomina');
+(3717, 'candrasengkala', 'Nomina'),
+(3718, 'candu', 'Nomina');
 INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
-(3718, 'candu', 'Nomina'),
 (3719, 'candung', 'Nomina'),
 (3720, 'cang', 'Nomina'),
 (3721, 'cangah', 'Verba'),
@@ -36190,9 +36048,9 @@ INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (5552, 'doktorandus', 'Nomina'),
 (5553, 'doktrin', 'Nomina'),
 (5554, 'doku', 'Nomina'),
-(5555, 'dokumen', 'Nomina');
+(5555, 'dokumen', 'Nomina'),
+(5556, 'dokumentasi', 'Nomina');
 INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
-(5556, 'dokumentasi', 'Nomina'),
 (5557, 'dokumenter', 'Adjektiva'),
 (5558, 'dol', 'Nomina'),
 (5559, 'dolan', 'Verba'),
@@ -37985,10 +37843,10 @@ INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (7346, 'gandung', 'Nomina'),
 (7347, 'gang', 'Nomina'),
 (7348, 'ganggang', 'Verba'),
-(7349, 'ganggu', 'Verba');
-INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
+(7349, 'ganggu', 'Verba'),
 (7350, 'ganggu gugat', 'Verba'),
-(7351, 'ganggut', 'Verba'),
+(7351, 'ganggut', 'Verba');
+INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (7352, 'ganglion', 'Nomina'),
 (7353, 'gangsa', 'Nomina'),
 (7354, 'gangsar', 'Adjektiva'),
@@ -39815,10 +39673,10 @@ INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (9175, 'holokrin', 'Adjektiva'),
 (9176, 'holoplankton', 'Nomina'),
 (9177, 'holosen', 'Nomina'),
-(9178, 'holozoik', 'Adjektiva');
-INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
+(9178, 'holozoik', 'Adjektiva'),
 (9179, 'homeostasis', 'Nomina'),
-(9180, 'homili', 'Nomina'),
+(9180, 'homili', 'Nomina');
+INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (9181, 'hominid', 'Nomina'),
 (9182, 'hominoid', 'Adjektiva'),
 (9183, 'homo', 'Nomina'),
@@ -41605,10 +41463,10 @@ INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (10964, 'kahan', 'Nomina'),
 (10965, 'kahar', 'Nomina'),
 (10966, 'kahat', 'Nomina'),
-(10967, 'kahin', 'Nomina');
-INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
+(10967, 'kahin', 'Nomina'),
 (10968, 'kahrab', 'Nomina'),
-(10969, 'kahwa', 'Nomina'),
+(10969, 'kahwa', 'Nomina');
+INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (10970, 'kahwaji', 'Nomina'),
 (10971, 'kahyangan', 'Nomina'),
 (10972, 'kaidah', 'Nomina'),
@@ -43381,10 +43239,10 @@ INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (12739, 'khunsa', 'Adjektiva'),
 (12740, 'khurafat', 'Nomina'),
 (12741, 'khusuf', 'Nomina'),
-(12742, 'khusus', 'Adjektiva');
-INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
+(12742, 'khusus', 'Adjektiva'),
 (12743, 'khusyuk', 'Adjektiva'),
-(12744, 'ki', 'Nomina'),
+(12744, 'ki', 'Nomina');
+INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (12745, 'kia', 'Nomina'),
 (12746, 'kiah', 'Verba'),
 (12747, 'kiai', 'Nomina'),
@@ -45134,10 +44992,10 @@ INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (14491, 'lanjam', 'Nomina'),
 (14492, 'lanjang', 'Adjektiva'),
 (14493, 'lanjar', 'Adjektiva'),
-(14494, 'lanjau', 'Verba');
-INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
+(14494, 'lanjau', 'Verba'),
 (14495, 'lanji', 'Nomina'),
-(14496, 'lanjuk', 'Verba'),
+(14496, 'lanjuk', 'Verba');
+INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (14497, 'lanjung', 'Adjektiva'),
 (14498, 'lanjur', 'Adjektiva'),
 (14499, 'lanjut', 'Adjektiva'),
@@ -46921,10 +46779,10 @@ INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (16277, 'masygul', 'Adjektiva'),
 (16278, 'masyhadat', 'Nomina'),
 (16279, 'masyhur', 'Adjektiva'),
-(16280, 'masyrik', 'Nomina');
-INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
+(16280, 'masyrik', 'Nomina'),
 (16281, 'masyuk', 'Adjektiva'),
-(16282, 'mata', 'Nomina'),
+(16282, 'mata', 'Nomina');
+INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (16283, 'matador', 'Nomina'),
 (16284, 'matahari', 'Nomina'),
 (16285, 'matakao', 'Nomina'),
@@ -48654,10 +48512,10 @@ INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (18009, 'nonkimia', 'Adjektiva'),
 (18010, 'nonkombatan', 'Nomina'),
 (18011, 'nonkonvensional', 'Adjektiva'),
-(18012, 'nonkooperasi', 'Nomina');
-INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
+(18012, 'nonkooperasi', 'Nomina'),
 (18013, 'nonkooperatif', 'Adjektiva'),
-(18014, 'nonmedis', 'Adjektiva'),
+(18014, 'nonmedis', 'Adjektiva');
+INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (18015, 'nonmigas', 'Nomina'),
 (18016, 'nonmiliter', 'Adjektiva'),
 (18017, 'nonok', 'Nomina'),
@@ -50407,10 +50265,10 @@ INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (19761, 'perisai', 'Nomina'),
 (19762, 'periskop', 'Nomina'),
 (19763, 'perispora', 'Nomina'),
-(19764, 'peristalsis', 'Nomina');
-INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
+(19764, 'peristalsis', 'Nomina'),
 (19765, 'peristaltik', 'Nomina'),
-(19766, 'peristerit', 'Nomina'),
+(19766, 'peristerit', 'Nomina');
+INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (19767, 'peristiwa', 'Nomina'),
 (19768, 'peristonium', 'Nomina'),
 (19769, 'perit', 'Adjektiva'),
@@ -52154,11 +52012,11 @@ INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (21507, 'rawak', 'Adjektiva'),
 (21508, 'rawan', 'Adjektiva'),
 (21509, 'rawat', 'Verba'),
-(21510, 'rawatib', 'Nomina');
-INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
+(21510, 'rawatib', 'Nomina'),
 (21511, 'rawi', 'Nomina'),
 (21512, 'rawin', 'Nomina'),
-(21513, 'rawit', 'Adjektiva'),
+(21513, 'rawit', 'Adjektiva');
+INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (21514, 'rawon', 'Nomina'),
 (21515, 'raya', 'Adjektiva'),
 (21516, 'rayah', 'Verba'),
@@ -53932,11 +53790,11 @@ INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (23284, 'selera', 'Nomina'),
 (23285, 'selerak', 'Verba'),
 (23286, 'selerang', 'Nomina'),
-(23287, 'selesa', 'Adjektiva');
-INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
+(23287, 'selesa', 'Adjektiva'),
 (23288, 'selesai', 'Verba'),
 (23289, 'selesma', 'Nomina'),
-(23290, 'seletuk', 'Verba'),
+(23290, 'seletuk', 'Verba');
+INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (23291, 'seleweng', 'Verba'),
 (23292, 'selia', 'Adjektiva'),
 (23293, 'seliap', 'Nomina'),
@@ -55677,11 +55535,11 @@ INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (25028, 'suargaloka', 'Nomina'),
 (25029, 'suari', 'Nomina'),
 (25030, 'suasa', 'Nomina'),
-(25031, 'suasana', 'Nomina');
-INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
+(25031, 'suasana', 'Nomina'),
 (25032, 'suat', 'Nomina'),
 (25033, 'suatu', 'Numeralia'),
-(25034, 'subak', 'Nomina'),
+(25034, 'subak', 'Nomina');
+INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (25035, 'subal', 'Adjektiva'),
 (25036, 'subam', 'Adjektiva'),
 (25037, 'suban', 'Nomina'),
@@ -57457,11 +57315,11 @@ INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (26807, 'tingting', 'Nomina'),
 (26808, 'tingtong', 'Nomina'),
 (26809, 'tingtur', 'Nomina'),
-(26810, 'tinja', 'Nomina');
-INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
+(26810, 'tinja', 'Nomina'),
 (26811, 'tinjak', 'Nomina'),
 (26812, 'tinjau', 'Verba'),
-(26813, 'tinju', 'Nomina'),
+(26813, 'tinju', 'Nomina');
+INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 (26814, 'tinta', 'Nomina'),
 (26815, 'tinting', 'Verba'),
 (26816, 'tintir', 'Nomina'),
@@ -59183,30 +59041,6 @@ INSERT INTO `tb_katadasar` (`id_ktdasar`, `katadasar`, `tipe_katadasar`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tess_in`
---
-
-CREATE TABLE `tess_in` (
-  `dokumen_id` varchar(30) NOT NULL,
-  `id` int(11) NOT NULL,
-  `data` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `tess_out`
---
-
-CREATE TABLE `tess_out` (
-  `dokumen_id` varchar(30) NOT NULL,
-  `id` int(11) NOT NULL,
-  `data` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Struktur dari tabel `user`
 --
 
@@ -59305,34 +59139,10 @@ CREATE TABLE `user_token` (
 --
 
 --
--- Indeks untuk tabel `confixes`
---
-ALTER TABLE `confixes`
-  ADD PRIMARY KEY (`confixes_id`);
-
---
--- Indeks untuk tabel `prefixes`
---
-ALTER TABLE `prefixes`
-  ADD PRIMARY KEY (`prefixes_id`);
-
---
--- Indeks untuk tabel `suffixes`
---
-ALTER TABLE `suffixes`
-  ADD PRIMARY KEY (`suffixes_id`);
-
---
 -- Indeks untuk tabel `tabel_dokumen`
 --
 ALTER TABLE `tabel_dokumen`
   ADD PRIMARY KEY (`dokumen_id`);
-
---
--- Indeks untuk tabel `tabel_imbuhan`
---
-ALTER TABLE `tabel_imbuhan`
-  ADD PRIMARY KEY (`imbuhan_id`);
 
 --
 -- Indeks untuk tabel `tabel_kata`
@@ -59364,18 +59174,6 @@ ALTER TABLE `tabel_term`
 --
 ALTER TABLE `tb_katadasar`
   ADD PRIMARY KEY (`id_ktdasar`);
-
---
--- Indeks untuk tabel `tess_in`
---
-ALTER TABLE `tess_in`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `tess_out`
---
-ALTER TABLE `tess_out`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeks untuk tabel `user`
@@ -59412,34 +59210,16 @@ ALTER TABLE `user_token`
 --
 
 --
--- AUTO_INCREMENT untuk tabel `tabel_imbuhan`
---
-ALTER TABLE `tabel_imbuhan`
-  MODIFY `imbuhan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
 -- AUTO_INCREMENT untuk tabel `tabel_stemming`
 --
 ALTER TABLE `tabel_stemming`
-  MODIFY `stemming_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108337;
+  MODIFY `stemming_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162461;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_katadasar`
 --
 ALTER TABLE `tb_katadasar`
   MODIFY `id_ktdasar` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28533;
-
---
--- AUTO_INCREMENT untuk tabel `tess_in`
---
-ALTER TABLE `tess_in`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `tess_out`
---
-ALTER TABLE `tess_out`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
