@@ -117,8 +117,8 @@ class Search extends CI_Controller {
                 }
             }
             
-            $arrRevDokRes = array_reverse($dokumenResult);
-            $arrRevStemmRes = array_reverse($stemAllResult);
+            $arrRevDokRes = $dokumenResult;
+            $arrRevStemmRes = $stemAllResult;
             
             $Ukey = array();
             $hasilUnstem = array();
@@ -371,6 +371,15 @@ class Search extends CI_Controller {
                     return $kata;
                 }
                 if($kata == "sekolah") {
+                    return $kata;
+                }
+                if($kata == "metode") {
+                    return $kata;
+                }
+                if($kata == "segmentasi") {
+                    return $kata;
+                }
+                if($kata == "citra") {
                     return $kata;
                 }
 

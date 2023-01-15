@@ -41,10 +41,11 @@ class Semua_hasil extends CI_Controller {
                 );
                 $SemuaHasil[] = $valueData;
             }
+
         }
 
         $uniqueArray = $this->super_unique($SemuaHasil);
-        $data['allResult'] = $this->super_unique($uniqueArray);
+        $data['allResult'] = $uniqueArray;
 
         $this->load->view('templates/user/header', $data);
         $this->load->view('templates/user/topbar');
