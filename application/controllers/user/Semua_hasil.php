@@ -22,22 +22,18 @@ class Semua_hasil extends CI_Controller {
 
         $data['names'] = $getString;
 
-        $exp_getString = explode(' ', $getString);
+        $exp_getString = explode(' ', strtoupper($getString));
         $SemuaHasil = array();
 
         foreach ($exp_getString as $e_gs) {
             $dataSearchNonPre = $this->dataSearch($e_gs);
             foreach($dataSearchNonPre as $value) {
-                foreach($exp_getString as $keyword) {
-                    $value['dokumen_judul'] = preg_replace("/($keyword)/i","<i><b style='background-color:#FFF6BF; color:black;'>$0</b></i>",$value['dokumen_judul']);
-                }  
-                $newReplace = $value['dokumen_judul'];
-                
                 $valueData = array(
                     'dokumen_id' => $value['dokumen_id'],
-                    'dokumen_judul' => $newReplace,
+                    'dokumen_judul' => $value['dokumen_judul'],
                     'dokumen_penulis' => $value['dokumen_penulis'],
                     'dokumen_tahun' => $value['dokumen_tahun'],
+                    'counts' => $this->substr_count_array($value['dokumen_judul'], $exp_getString),
                 );
                 $SemuaHasil[] = $valueData;
             }
@@ -45,7 +41,33 @@ class Semua_hasil extends CI_Controller {
         }
 
         $uniqueArray = $this->super_unique($SemuaHasil);
-        $data['allResult'] = $uniqueArray;
+        $newArray = array();
+
+        foreach($uniqueArray as $item) {
+            foreach($exp_getString as $keyword) {
+                $item['dokumen_judul'] = preg_replace("/($keyword)/i","<i><b style='background-color:#FFF6BF; color:black;'>$0</b></i>",$item['dokumen_judul']);
+            }  
+
+            $newReplace = $item['dokumen_judul'];
+
+            $Rep_Array = array(
+                'dokumen_id' => $item['dokumen_id'],
+                'dokumen_judul' => $newReplace,
+                'dokumen_penulis' => $item['dokumen_penulis'],
+                'dokumen_tahun' => $item['dokumen_tahun'],
+                'counts' => $item['counts'],
+            );
+
+            $newArray[] = $Rep_Array;
+        }
+
+        usort($newArray, function($a, $b) {
+            return $a['counts'] - $b['counts'];
+        });
+
+        $reverseArray = array_reverse($newArray);
+
+        $data['allResult'] = $reverseArray;
 
         $this->load->view('templates/user/header', $data);
         $this->load->view('templates/user/topbar');
@@ -81,5 +103,17 @@ class Semua_hasil extends CI_Controller {
         }
 
         return $result;
+    }
+
+    public function substr_count_array($haystack, $needle){
+        $initial = 0;
+        $bits_of_haystack = explode(' ', $haystack);
+        foreach ($needle as $substring) {
+            if(!in_array($substring, $bits_of_haystack))
+                continue;
+    
+            $initial += substr_count($haystack, $substring);
+        }
+        return $initial;
     }
 }

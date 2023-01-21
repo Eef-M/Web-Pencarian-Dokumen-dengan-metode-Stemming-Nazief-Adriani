@@ -29,7 +29,11 @@ class Search extends CI_Controller {
             $expSemua = explode(' ', $keywords);
 
             $dokumenResult = array();
+            $finalDokResArray = array();
+
             $stemAllResult = array();
+            $finalStemResArray = array();
+
             $addImbuh = array();
             $baruArr = array();
 
@@ -41,60 +45,122 @@ class Search extends CI_Controller {
 
             foreach($expSemua as $smm) {
                 if(!$this->cekKamus($smm)) {
+
+                    // -----------------------------
                     foreach ($expSemua as $esm) {
                         $dataSearch = $this->dataSearch($esm);
                         foreach($dataSearch as $value) {
-                            foreach($expSemua as $keyword) {
-                                $value['dokumen_judul'] = preg_replace("/($keyword)/i","<i><b style='background-color:#FFF6BF; color:black;'>$0</b></i>",$value['dokumen_judul']);
-                            }  
-                            $newReplace = $value['dokumen_judul'];
-            
                             $valueData = array(
                                 'dokumen_id' => $value['dokumen_id'],
-                                'dokumen_judul' => $newReplace,
+                                'dokumen_judul' => $value['dokumen_judul'],
                                 'dokumen_penulis' => $value['dokumen_penulis'],
                                 'dokumen_tahun' => $value['dokumen_tahun'],
+                                'counts' => $this->substr_count_array(strtolower($value['dokumen_judul']), $expSemua),
                             );
                             $dokumenResult[] = $valueData;
                         }
                     }
 
+                    foreach($dokumenResult as $item) {
+                        foreach($expSemua as $keyword) {
+                            $item['dokumen_judul'] = preg_replace("/($keyword)/i","<i><b style='background-color:#FFF6BF; color:black;'>$0</b></i>",$item['dokumen_judul']);
+                        }  
+
+                        $newReplace = $item['dokumen_judul'];
+
+                        $repArray = array(
+                            'dokumen_id' => $item['dokumen_id'],
+                            'dokumen_judul' => $newReplace,
+                            'dokumen_penulis' => $item['dokumen_penulis'],
+                            'dokumen_tahun' => $item['dokumen_tahun'],
+                            'counts' => $item['counts'],
+                        );
+
+                        $finalDokResArray[] = $repArray;
+                    }
+
+                    usort($finalDokResArray, function($a, $b) {
+                        return $a['counts'] - $b['counts'];
+                    });
+
+                    // --------------------------------------
                     foreach ($expStem as $exStm) {
                         $dataStemm = $this->dataSearch($exStm);
                         foreach($dataStemm as $value) {
-                            foreach($expStem as $keyword) {
-                                $value['dokumen_judul'] = preg_replace("/($keyword)/i","<i><b style='background-color:#FFF6BF; color:black;'>$0</b></i>",$value['dokumen_judul']);
-                            }  
-                            $newReplace = $value['dokumen_judul'];
-            
                             $valueData = array(
                                 'dokumen_id' => $value['dokumen_id'],
-                                'dokumen_judul' => $newReplace,
+                                'dokumen_judul' => $value['dokumen_judul'],
                                 'dokumen_penulis' => $value['dokumen_penulis'],
                                 'dokumen_tahun' => $value['dokumen_tahun'],
+                                'counts' => $this->substr_count_array(strtolower($value['dokumen_judul']), $expStem),
                             );
                             $stemAllResult[] = $valueData;
                         }
                     }
 
+                    foreach($stemAllResult as $item) {
+                        foreach($expStem as $keyword) {
+                            $item['dokumen_judul'] = preg_replace("/($keyword)/i","<i><b style='background-color:#FFF6BF; color:black;'>$0</b></i>",$item['dokumen_judul']);
+                        }  
+
+                        $newReplace = $item['dokumen_judul'];
+
+                        $repArray = array(
+                            'dokumen_id' => $item['dokumen_id'],
+                            'dokumen_judul' => $newReplace,
+                            'dokumen_penulis' => $item['dokumen_penulis'],
+                            'dokumen_tahun' => $item['dokumen_tahun'],
+                            'counts' => $item['counts'],
+                        );
+
+                        $finalStemResArray[] = $repArray;
+                    }
+
+                    usort($finalStemResArray, function($a, $b) {
+                        return $a['counts'] - $b['counts'];
+                    });
+
+                    // --------------------------------------------
+
                 } else {
+                    // ---------------------------------------------
                     foreach ($expSemua as $esm) {
                         $dataSearchNonPre = $this->dataSearch($esm);
-                        foreach($dataSearchNonPre as $value) {
-                            foreach($expSemua as $keyword) {
-                                $value['dokumen_judul'] = preg_replace("/($keyword)/i","<i><b style='background-color:#FFF6BF; color:black;'>$0</b></i>",$value['dokumen_judul']);
-                            }  
-                            $newReplace = $value['dokumen_judul'];
-                            
+                        foreach($dataSearchNonPre as $value) {                
                             $valueData = array(
                                 'dokumen_id' => $value['dokumen_id'],
-                                'dokumen_judul' => $newReplace,
+                                'dokumen_judul' => $value['dokumen_judul'],
                                 'dokumen_penulis' => $value['dokumen_penulis'],
                                 'dokumen_tahun' => $value['dokumen_tahun'],
+                                'counts' => $this->substr_count_array(strtolower($value['dokumen_judul']), $expSemua),
                             );
                             $dokumenResult[] = $valueData;
                         }
                     }
+
+                    foreach($dokumenResult as $item) {
+                        foreach($expSemua as $keyword) {
+                            $item['dokumen_judul'] = preg_replace("/($keyword)/i","<i><b style='background-color:#FFF6BF; color:black;'>$0</b></i>",$item['dokumen_judul']);
+                        }  
+
+                        $newReplace = $item['dokumen_judul'];
+
+                        $repArray = array(
+                            'dokumen_id' => $item['dokumen_id'],
+                            'dokumen_judul' => $newReplace,
+                            'dokumen_penulis' => $item['dokumen_penulis'],
+                            'dokumen_tahun' => $item['dokumen_tahun'],
+                            'counts' => $item['counts'],
+                        );
+
+                        $finalDokResArray[] = $repArray;
+                    }
+
+                    usort($finalDokResArray, function($a, $b) {
+                        return $a['counts'] - $b['counts'];
+                    });
+
+                    // ---------------------------------------
                     
                     $addImbuh[] = $this->tambahImbuhan($smm);
                     $newUnstemArr = array();
@@ -117,15 +183,16 @@ class Search extends CI_Controller {
                 }
             }
             
-            $arrRevDokRes = $dokumenResult;
-            $arrRevStemmRes = $stemAllResult;
+            $arrRevDokRes = array_reverse($finalDokResArray);
+            $arrRevStemmRes = array_reverse($finalStemResArray);
+
             
             $Ukey = array();
             $hasilUnstem = array();
             foreach ($expSemua as $ES) {
                 $Ukey[] = $this->tambahImbuhan($ES);
             }
-
+            
             
             if($theStem == $keywords) {
                 $data['dokumen'] = $this->super_unique($arrRevDokRes);
@@ -143,12 +210,13 @@ class Search extends CI_Controller {
                 $superUnstem = $this->dataUnstemming($Ukey);
                 $resNewUnstem = $this->super_unique($superUnstem);
                 $KeyOfUnstem = implode(' ', $Ukey); 
+                $revUnstem = array_reverse($resNewUnstem);        
                 
                 if($KeyOfUnstem == $keywords) {
                     $data['dokunstem'] = NULL;
                     $data['unstemkey'] = NULL;
                 } else {
-                    $data['dokunstem'] = $resNewUnstem;
+                    $data['dokunstem'] = $revUnstem;
                     $data['unstemkey'] = $KeyOfUnstem;
                 }
             }
@@ -180,10 +248,22 @@ class Search extends CI_Controller {
         return $result;
     }
 
+    public function substr_count_array($haystack, $needle){
+        $initial = 0;
+        $bits_of_haystack = explode(' ', $haystack);
+        foreach ($needle as $substring) {
+            if(!in_array($substring, $bits_of_haystack))
+                continue;
+    
+            $initial += substr_count($haystack, $substring);
+        }
+        return $initial;
+    }
+
     public function dataSearch($loop) {
         $arrSrc = array();
         $mencariData = $this->m_data->searchkey($loop);
-        foreach(array_slice($mencariData, 0, 2) as $key => $mcd) {
+        foreach($mencariData as $key => $mcd) {
             $allDataArray = array(
                 'dokumen_id' => $mcd['dokumen_id'],
                 'dokumen_judul' => $mcd['dokumen_judul'],
@@ -197,25 +277,43 @@ class Search extends CI_Controller {
 
     public function dataUnstemming($array) {
         $newArray = array();
+        $finalArray = array();
         foreach ($array as $arr) {
             $dataSearch = $this->dataSearch($arr);
             foreach($dataSearch as $value) {
-                foreach($array as $keyword) {
-                    $value['dokumen_judul'] = preg_replace("/($keyword)/i","<i><b style='background-color:#FFF6BF; color:black;'>$0</b></i>",$value['dokumen_judul']);
-                }  
-                $newReplace = $value['dokumen_judul'];
-
                 $valueData = array(
                     'dokumen_id' => $value['dokumen_id'],
-                    'dokumen_judul' => $newReplace,
+                    'dokumen_judul' => $value['dokumen_judul'],
                     'dokumen_penulis' => $value['dokumen_penulis'],
                     'dokumen_tahun' => $value['dokumen_tahun'],
+                    'counts' => $this->substr_count_array(strtolower($value['dokumen_judul']), $array),
                 );
                 $newArray[] = $valueData;
             }
         }
 
-        return $newArray;
+        foreach ($newArray as $item) {
+            foreach($array as $keyword) {
+                $item['dokumen_judul'] = preg_replace("/($keyword)/i","<i><b style='background-color:#FFF6BF; color:black;'>$0</b></i>",$item['dokumen_judul']);
+            }  
+            $newReplace = $item['dokumen_judul'];
+
+            $repArray = array(
+                'dokumen_id' => $item['dokumen_id'],
+                'dokumen_judul' => $newReplace,
+                'dokumen_penulis' => $item['dokumen_penulis'],
+                'dokumen_tahun' => $item['dokumen_tahun'],
+                'counts' => $item['counts'],
+            );
+
+            $finalArray[] = $repArray;
+        }
+
+        usort($finalArray, function($a, $b) {
+            return $a['counts'] - $b['counts'];
+        });
+
+        return $finalArray;
     }
             
     public function SetIdForDok($id) {
