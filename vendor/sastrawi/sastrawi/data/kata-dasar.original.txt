@@ -1033,7 +1033,6 @@ ancak
 ancak-ancak
 ancala
 ancam
-ancang
 ancar-ancar
 ancoa
 ancol
@@ -29745,7 +29744,6 @@ viskose
 viskositas
 vista
 visual
-visualisasi
 visum
 visus
 vitakultur

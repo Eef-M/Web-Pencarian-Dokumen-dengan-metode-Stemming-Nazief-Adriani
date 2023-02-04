@@ -13,11 +13,29 @@ class Semua_hasil extends CI_Controller {
         header('Pragma: no-cache');
     }
 
-    public function index($keyword) {
+    public function index($keywords) {
         $data['title'] = 'SEMUA HASIL PENCARIAN DOKUMEN';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
-        $brokeString = explode("_", $keyword);
+        $key = $keywords;
+
+        $key = str_replace("'", "", $key);
+        $key = str_replace("-", "", $key);
+        $key = str_replace(")", "", $key);
+        $key = str_replace("(", "", $key);
+        $key = str_replace("\"", "",$key);
+        $key = str_replace("/", "", $key);
+        $key = str_replace("=", "", $key);
+        $key = str_replace(".", "", $key);
+        $key = str_replace(",", "", $key);
+        $key = str_replace(":", "", $key);
+        $key = str_replace(";", "", $key);
+        $key = str_replace("!", "", $key);
+        $key = str_replace("?", "", $key);
+        $key = str_replace(">", "", $key);
+        $key = str_replace("<", "", $key);
+
+        $brokeString = explode("_", $key);
         $getString = implode(" ", $brokeString);
 
         $data['names'] = $getString;

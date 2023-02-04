@@ -23,8 +23,27 @@ class Search extends CI_Controller {
         $data['title'] = 'HASIL PENCARIAN DOKUMEN';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
-        if ($this->input->post('keyword')) {
-            $keywords = $this->input->post('keyword');
+        $key = strtolower($this->input->post('keyword'));
+
+        $key = str_replace("'", "", $key);
+        $key = str_replace("-", "", $key);
+        $key = str_replace(")", "", $key);
+        $key = str_replace("(", "", $key);
+        $key = str_replace("\"", "",$key);
+        $key = str_replace("/", "", $key);
+        $key = str_replace("=", "", $key);
+        $key = str_replace(".", "", $key);
+        $key = str_replace(",", "", $key);
+        $key = str_replace(":", "", $key);
+        $key = str_replace(";", "", $key);
+        $key = str_replace("!", "", $key);
+        $key = str_replace("?", "", $key);
+        $key = str_replace(">", "", $key);
+        $key = str_replace("<", "", $key);
+
+        if ($key) {
+
+            $keywords = $key;
 
             $expSemua = explode(' ', $keywords);
 
@@ -479,6 +498,26 @@ class Search extends CI_Controller {
                 }
                 if($kata == "citra") {
                     return $kata;
+                }
+                if($kata == "sarana") {
+                    return $kata;
+                }
+                if($kata == "bagai") {
+                    $__kata = preg_replace('/^/','se',$kata);
+                    if($__kata) {
+                        return $__kata;
+                    } else {
+                        return $kata;
+                    }
+                }
+                if($kata == "iklan") {
+                    $__kata = preg_replace('/^/','per',$kata);
+                    if($__kata) {
+                        $__kata__ = preg_replace('/$/','an',$__kata);
+                        return $__kata__;
+                    } else {
+                        return $kata;
+                    }
                 }
 
                 if(preg_match('/^(anc)[aiueo]\S{1,}/',$kata)) {
